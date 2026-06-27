@@ -11,9 +11,7 @@ yourself in the browser window — the script never sees or handles your passwor
 
 ## Demo
 
-<video src="https://github.com/Efe0909/threads-follow-diff/raw/main/demo.mp4" controls width="100%"></video>
-
-If the player doesn't load, [watch the demo](demo.mp4).
+https://github.com/user-attachments/assets/c0729bcf-811e-4100-844b-17ee652b7a41
 
 ## Setup
 
@@ -120,9 +118,7 @@ penceresinde sen giriş yaparsın — script parolanı görmez ve ona dokunmaz.
 
 ## Demo
 
-<video src="https://github.com/Efe0909/threads-follow-diff/raw/main/demo.mp4" controls width="100%"></video>
-
-Oynatıcı yüklenmezse [demoyu izle](demo.mp4).
+https://github.com/user-attachments/assets/c0729bcf-811e-4100-844b-17ee652b7a41
 
 ## Kurulum
 

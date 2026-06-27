@@ -13,3 +13,6 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Demo video is hosted via GitHub user-attachments, not committed
+*.mp4
