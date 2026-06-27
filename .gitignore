@@ -1,0 +1,15 @@
+# Browser profile — holds your live login session, ~250 MB. Never commit.
+.chrome-profile/
+
+# Local database (diff history + metadata)
+threads.db
+threads.db-journal
+threads.db-wal
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
