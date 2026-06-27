@@ -100,6 +100,12 @@ Scraping Threads is against Meta's ToS. Reading your own lists, read-only and at
 modest scale, is low risk but not zero — runs are deliberately slow/human-paced.
 Don't run it in rapid succession.
 
+## License
+
+[Mozilla Public License 2.0](LICENSE) © 2026 Efe0909. You may use and bundle
+this code (including in commercial or closed-source projects), but modifications
+to its files must remain open source under the MPL-2.0.
+
 ---
 
 # Türkçe
@@ -202,3 +208,9 @@ yalnızca `threads.db`'yi sil; tam sıfırlama (çıkış dahil) `--clean`.
 Threads'i kazımak Meta'nın Kullanım Koşulları'na aykırıdır. Kendi listelerini
 salt-okunur ve mütevazı ölçekte okumak düşük risklidir ama sıfır değildir —
 çalıştırmalar bilerek yavaş/insan hızındadır. Art arda hızlıca çalıştırma.
+
+## Lisans
+
+[Mozilla Public License 2.0](LICENSE) © 2026 Efe0909. Bu kodu kullanabilir ve
+(ticari veya kapalı kaynaklı projeler dahil) paketleyebilirsin; ancak dosyalarda
+yaptığın değişiklikler MPL-2.0 altında açık kaynak kalmalıdır.
