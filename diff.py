@@ -8,10 +8,11 @@ GREEN = follows you back, RED = doesn't, WHITE = new since your last diff.
 READ-ONLY. Never follows/unfollows. You log in yourself in the browser window;
 the script never handles credentials.
 
-Usage:
-    .venv/bin/python diff.py            # interactive
-    .venv/bin/python diff.py --metrics  # dump metadata as JSON (jq/bat), no UI
-    .venv/bin/python diff.py --no-theme # interactive, skip the colored window
+Usage (with the virtualenv activated):
+    python diff.py            # interactive
+    python diff.py --metrics  # dump metadata as JSON (jq/bat), no UI
+    python diff.py --no-theme # interactive, skip the colored window
+    python diff.py --clean    # delete the DB and all caches (logs you out)
 
 Selectors verified against live Threads DOM (2026-06-27); see comments inline.
 """
@@ -554,7 +555,7 @@ def interactive(do_theme=True):
                   f"{len(non_followers)} don't follow back.")
 
         print(f"Stored in {DB_PATH} "
-              f"(query with: .venv/bin/python diff.py --metrics)")
+              f"(query with: python diff.py --metrics)")
 
         if do_theme:
             apply_theme(driver, handle, status_map, baseline)
