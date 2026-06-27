@@ -11,14 +11,30 @@ yourself in the browser window — the script never sees or handles your passwor
 
 Requires Python 3.9+ and Google Chrome.
 
+**macOS / Linux:**
+
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate.bat
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-(Or, if you have [uv](https://docs.astral.sh/uv/): `uv venv .venv && uv pip
-install -r requirements.txt`.)
+**Windows (PowerShell):**
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+(Windows cmd.exe: use `.venv\Scripts\activate.bat` instead of the PowerShell line.)
+
+Or, if you have [uv](https://docs.astral.sh/uv/) on any platform:
+
+```bash
+uv venv .venv
+uv pip install -r requirements.txt
+```
 
 ## Usage
 
