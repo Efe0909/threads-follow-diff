@@ -9,12 +9,15 @@ yourself in the browser window — the script never sees or handles your passwor
 
 ## Setup
 
-Requires [uv](https://docs.astral.sh/uv/) and Google Chrome.
+Requires Python 3.9+ and Google Chrome.
 
 ```bash
-uv venv .venv
-uv pip install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
+
+(Or, if you have [uv](https://docs.astral.sh/uv/): `uv venv .venv && uv pip
+install -r requirements.txt`.)
 
 ## Usage
 
