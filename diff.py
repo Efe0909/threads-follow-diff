@@ -40,6 +40,94 @@ SCROLL_PAUSE = 1.5
 STABLE_ROUNDS = 5
 MAX_SCROLLS = 600
 
+# ------------------------------------------------------------------------- i18n
+LANG = "en"
+
+STRINGS = {
+    "en": {
+        "yes_char": "y", "confirm_hint": "[y/N]",
+        "no_saved": "\nNo saved login — you'll log in in the browser window.",
+        "login_header": "\nLogin — saved session: @{saved}",
+        "use_last": "Use last login (@{saved})",
+        "new_acc": "Log in to a new account (clears saved session)",
+        "login_title": "\n=== LOG IN ===",
+        "login_open": "A Chrome window is open — log into Threads there.",
+        "login_wait": "The script will NOT touch your password and continues "
+                      "automatically once you're in (waiting up to {n} min).",
+        "login_ok": "Logged in as @{h} — continuing.",
+        "login_timeout": "[!] Login timed out. Aborting.",
+        "diff_header": "\nDiff — previous diff for @{handle}: {ts} "
+                       "({n} don't follow back)",
+        "diff_new": "Run a new diff (scrape Threads now)",
+        "diff_prev": "Use the previous diff from the database",
+        "collect_followers": "Collecting Followers...",
+        "collect_following": "Collecting Following...",
+        "summary": "\nFollowing: {g}   Followers: {f}   "
+                   "Don't follow back: {nf}",
+        "using_prev": "\nUsing previous diff from {ts}: {n} don't follow back.",
+        "stored": "Stored in {db} (query with: python diff.py --metrics)",
+        "theme_legend": "\nThemed Following: GREEN=follows you back, "
+                        "RED=doesn't, WHITE=new since last diff.",
+        "theme_help": "Scroll to review; unfollow the RED ones by hand. "
+                      "Close the window when done.",
+        "theme_fail": "[!] Could not open Following tab for theming.",
+        "invalid": "Invalid choice.\n",
+        "clean_nothing": "Nothing to clean.",
+        "clean_will": "Will delete:",
+        "reason_db": "diff history + metadata",
+        "reason_profile": "browser session / login — deleting this logs you out",
+        "reason_pycache": "python bytecode cache",
+        "clean_proceed": "\nProceed? {hint} ",
+        "clean_aborted": "Aborted.",
+        "clean_done": "Cleaned.",
+    },
+    "tr": {
+        "yes_char": "e", "confirm_hint": "[e/H]",
+        "no_saved": "\nKayıtlı giriş yok — tarayıcı penceresinde giriş "
+                    "yapacaksın.",
+        "login_header": "\nGiriş — kayıtlı oturum: @{saved}",
+        "use_last": "Son girişi kullan (@{saved})",
+        "new_acc": "Yeni hesapla giriş yap (kayıtlı oturumu siler)",
+        "login_title": "\n=== GİRİŞ ===",
+        "login_open": "Bir Chrome penceresi açıldı — Threads'e oradan giriş yap.",
+        "login_wait": "Parolana dokunulmayacak; giriş yapınca otomatik devam "
+                      "eder (en fazla {n} dk beklenir).",
+        "login_ok": "@{h} olarak giriş yapıldı — devam ediliyor.",
+        "login_timeout": "[!] Giriş zaman aşımına uğradı. İptal ediliyor.",
+        "diff_header": "\nDiff — @{handle} için önceki diff: {ts} "
+                       "({n} geri takip etmiyor)",
+        "diff_new": "Yeni diff çalıştır (Threads'i şimdi tara)",
+        "diff_prev": "Veritabanındaki önceki diff'i kullan",
+        "collect_followers": "Takipçiler toplanıyor...",
+        "collect_following": "Takip edilenler toplanıyor...",
+        "summary": "\nTakip edilen: {g}   Takipçi: {f}   "
+                   "Geri takip etmeyen: {nf}",
+        "using_prev": "\n{ts} tarihli önceki diff kullanılıyor: "
+                      "{n} geri takip etmiyor.",
+        "stored": "{db} içine kaydedildi (sorgu: python diff.py --metrics)",
+        "theme_legend": "\nTakip edilenler renklendi: YEŞİL=seni geri takip "
+                        "ediyor, KIRMIZI=etmiyor, BEYAZ=son diff'ten beri yeni.",
+        "theme_help": "İncelemek için kaydır; KIRMIZI olanları elle takipten "
+                      "çık. Bitince pencereyi kapat.",
+        "theme_fail": "[!] Renklendirme için Takip edilenler sekmesi açılamadı.",
+        "invalid": "Geçersiz seçim.\n",
+        "clean_nothing": "Silinecek bir şey yok.",
+        "clean_will": "Silinecekler:",
+        "reason_db": "diff geçmişi + meta veriler",
+        "reason_profile": "tarayıcı oturumu / giriş — bunu silmek seni çıkış "
+                          "yaptırır",
+        "reason_pycache": "python bytecode önbelleği",
+        "clean_proceed": "\nDevam edilsin mi? {hint} ",
+        "clean_aborted": "İptal edildi.",
+        "clean_done": "Temizlendi.",
+    },
+}
+
+
+def t(key, **kw):
+    s = STRINGS.get(LANG, STRINGS["en"]).get(key) or STRINGS["en"][key]
+    return s.format(**kw) if kw else s
+
 
 def ts():
     return datetime.now().astimezone().isoformat(timespec="seconds")
@@ -195,10 +283,9 @@ def wait_logged_in(driver, timeout=300):
     h = own_handle_dom(driver)
     if h:
         return h
-    print("\n=== LOG IN ===")
-    print("A Chrome window is open — log into Threads there.")
-    print("The script will NOT touch your password and continues automatically "
-          f"once you're in (waiting up to {timeout // 60} min).")
+    print(t("login_title"))
+    print(t("login_open"))
+    print(t("login_wait", n=timeout // 60))
     deadline = time.time() + timeout
     while time.time() < deadline:
         time.sleep(3)
@@ -210,7 +297,7 @@ def wait_logged_in(driver, timeout=300):
         time.sleep(2)
         h = own_handle_dom(driver)
         if h:
-            print(f"Logged in as @{h} — continuing.")
+            print(t("login_ok", h=h))
             return h
     return None
 
@@ -345,11 +432,11 @@ def scrape(driver, handle):
     if not open_followers_modal(driver):
         raise RuntimeError("could not open the followers modal")
     switch_tab(driver, "Followers")
-    print("Collecting Followers...")
+    print(t("collect_followers"))
     followers = scrape_open_list(driver, "followers")
     if not switch_tab(driver, "Following"):
         raise RuntimeError("could not open the Following tab")
-    print("Collecting Following...")
+    print(t("collect_following"))
     following = scrape_open_list(driver, "following")
     if not followers or not following:
         raise RuntimeError("a list came back empty")
@@ -404,13 +491,11 @@ def apply_theme(driver, handle, status_map, baseline):
     driver.get(f"{HOME_URL}@{handle}")
     time.sleep(3)
     if not open_followers_modal(driver) or not switch_tab(driver, "Following"):
-        print("[!] Could not open Following tab for theming.")
+        print(t("theme_fail"))
         return
     driver.execute_script(THEME_JS, list(status_map.items()), list(baseline))
-    print("\nThemed Following: GREEN=follows you back, RED=doesn't, "
-          "WHITE=new since last diff.")
-    print("Scroll to review; unfollow the RED ones by hand. Close the window "
-          "when done.")
+    print(t("theme_legend"))
+    print(t("theme_help"))
     try:
         while driver.window_handles:
             time.sleep(2)
@@ -430,7 +515,7 @@ def ask(prompt, options):
         ans = input("> ").strip()
         if ans in keys:
             return ans
-        print("Invalid choice.\n")
+        print(t("invalid"))
 
 
 def cmd_metrics():
@@ -459,21 +544,22 @@ def cmd_clean(assume_yes=False):
     .chrome-profile (browser session — THIS LOGS YOU OUT). Irreversible."""
     pycache = os.path.join(PROJECT_DIR, "__pycache__")
     targets = [
-        (DB_PATH, "diff history + metadata"),
-        (PROFILE_DIR, "browser session / login — deleting this logs you out"),
-        (pycache, "python bytecode cache"),
+        (DB_PATH, t("reason_db")),
+        (PROFILE_DIR, t("reason_profile")),
+        (pycache, t("reason_pycache")),
     ]
     existing = [(p, why) for p, why in targets if os.path.exists(p)]
     if not existing:
-        print("Nothing to clean.")
+        print(t("clean_nothing"))
         return
-    print("Will delete:")
+    print(t("clean_will"))
     for p, why in existing:
         size = _dir_size(p) if os.path.isdir(p) else os.path.getsize(p)
         print(f"  {p}  ({size / 1024:.0f} KB) — {why}")
     if not assume_yes:
-        if input("\nProceed? [y/N] ").strip().lower() != "y":
-            print("Aborted.")
+        if input(t("clean_proceed", hint=t("confirm_hint"))).strip().lower() \
+                != t("yes_char"):
+            print(t("clean_aborted"))
             return
     for p, _ in existing:
         if os.path.isdir(p):
@@ -483,7 +569,7 @@ def cmd_clean(assume_yes=False):
                 os.remove(p)
             except OSError as e:
                 print(f"[!] could not remove {p}: {e}")
-    print("Cleaned.")
+    print(t("clean_done"))
 
 
 def interactive(do_theme=True):
@@ -495,13 +581,13 @@ def interactive(do_theme=True):
     reuse = True
     if has_profile:
         choice = ask(
-            f"\nLogin — saved session: @{saved}",
-            [("1", f"Use last login (@{saved})"),
-             ("2", "Log in to a new account (clears saved session)")],
+            t("login_header", saved=saved),
+            [("1", t("use_last", saved=saved)),
+             ("2", t("new_acc"))],
         )
         reuse = choice == "1"
     else:
-        print("\nNo saved login — you'll log in in the browser window.")
+        print(t("no_saved"))
 
     if not reuse:
         shutil.rmtree(PROFILE_DIR, ignore_errors=True)
@@ -510,7 +596,7 @@ def interactive(do_theme=True):
     try:
         handle = wait_logged_in(driver)
         if not handle:
-            print("[!] Login timed out. Aborting.")
+            print(t("login_timeout"))
             return
         meta_set(conn, "last_account", handle)
         meta_set(conn, "last_login_at", ts())
@@ -520,10 +606,9 @@ def interactive(do_theme=True):
         do_scrape = True
         if prev:
             choice = ask(
-                f"\nDiff — previous diff for @{handle}: {prev['started_at']} "
-                f"({prev['non_followers_count']} don't follow back)",
-                [("1", "Run a new diff (scrape Threads now)"),
-                 ("2", "Use the previous diff from the database")],
+                t("diff_header", handle=handle, ts=prev["started_at"],
+                  n=prev["non_followers_count"]),
+                [("1", t("diff_new")), ("2", t("diff_prev"))],
             )
             do_scrape = choice == "1"
 
@@ -543,19 +628,17 @@ def interactive(do_theme=True):
                 baseline = set(following)
             non_followers = [(h, following[h]) for h in following
                              if h not in followers]
-            print(f"\nFollowing: {c['following']}   Followers: {c['followers']}"
-                  f"   Don't follow back: {c['non_followers']}")
+            print(t("summary", g=c["following"], f=c["followers"],
+                    nf=c["non_followers"]))
         else:
             following_rows = run_following(conn, prev["id"])
             status_map = {h: fm for h, _, fm in following_rows}
             baseline = set(status_map)  # live rows not here → white (new)
             non_followers = [(h, name) for h, name, fm in following_rows
                              if not fm]
-            print(f"\nUsing previous diff from {prev['started_at']}: "
-                  f"{len(non_followers)} don't follow back.")
+            print(t("using_prev", ts=prev["started_at"], n=len(non_followers)))
 
-        print(f"Stored in {DB_PATH} "
-              f"(query with: python diff.py --metrics)")
+        print(t("stored", db=DB_PATH))
 
         if do_theme:
             apply_theme(driver, handle, status_map, baseline)
@@ -577,7 +660,20 @@ def main():
                    help="skip the --clean confirmation prompt")
     p.add_argument("--no-theme", action="store_true",
                    help="skip the colored review window")
+    p.add_argument("--lang", choices=sorted(STRINGS),
+                   help="interface language (default: last used, else en); "
+                        "the choice is remembered")
     args = p.parse_args()
+
+    # Resolve language: explicit flag wins and is remembered; else last-used.
+    global LANG
+    conn = db_connect()
+    if args.lang:
+        LANG = args.lang
+        meta_set(conn, "lang", LANG)
+    else:
+        LANG = meta_get(conn, "lang", "en")
+    conn.close()
 
     if args.clean:
         cmd_clean(assume_yes=args.yes)

@@ -45,7 +45,11 @@ python diff.py            # interactive
 python diff.py --no-theme # interactive, no colored window (DB only)
 python diff.py --metrics  # dump metadata as JSON (pipe to jq/bat)
 python diff.py --clean    # delete the DB + browser cache (logs you out)
+python diff.py --lang tr  # Turkish interface (remembered; en is default)
 ```
+
+The interface language (`en` or `tr`) is remembered between runs once set with
+`--lang`. Metrics output stays English JSON for piping.
 
 Interactive flow asks two things, then acts:
 
