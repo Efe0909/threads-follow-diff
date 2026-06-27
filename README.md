@@ -9,6 +9,12 @@ Following list in a Chrome window so you can review and unfollow by hand.
 **Read-only.** It never follows or unfollows anyone. You log into Threads
 yourself in the browser window — the script never sees or handles your password.
 
+## Demo
+
+<video src="https://github.com/Efe0909/threads-follow-diff/raw/main/demo.mp4" controls width="100%"></video>
+
+If the player doesn't load, [watch the demo](demo.mp4).
+
 ## Setup
 
 Requires Python 3.9+ and Google Chrome.
@@ -105,6 +111,12 @@ penceresinde canlı Takip listesini renklendirir; böylece inceleyip elle takipt
 
 **Salt-okunur.** Kimseyi takip etmez veya takipten çıkarmaz. Threads'e tarayıcı
 penceresinde sen giriş yaparsın — script parolanı görmez ve ona dokunmaz.
+
+## Demo
+
+<video src="https://github.com/Efe0909/threads-follow-diff/raw/main/demo.mp4" controls width="100%"></video>
+
+Oynatıcı yüklenmezse [demoyu izle](demo.mp4).
 
 ## Kurulum
 
