@@ -13,7 +13,8 @@ Requires Python 3.9+ and Google Chrome.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+source .venv/bin/activate        # Windows: .venv\Scripts\activate.bat
+pip install -r requirements.txt
 ```
 
 (Or, if you have [uv](https://docs.astral.sh/uv/): `uv venv .venv && uv pip
@@ -21,11 +22,13 @@ install -r requirements.txt`.)
 
 ## Usage
 
+With the virtualenv activated:
+
 ```bash
-.venv/bin/python diff.py            # interactive
-.venv/bin/python diff.py --no-theme # interactive, no colored window (DB only)
-.venv/bin/python diff.py --metrics  # dump metadata as JSON (pipe to jq/bat)
-.venv/bin/python diff.py --clean    # delete the DB + browser cache (logs you out)
+python diff.py            # interactive
+python diff.py --no-theme # interactive, no colored window (DB only)
+python diff.py --metrics  # dump metadata as JSON (pipe to jq/bat)
+python diff.py --clean    # delete the DB + browser cache (logs you out)
 ```
 
 Interactive flow asks two things, then acts:
