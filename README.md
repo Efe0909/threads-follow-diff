@@ -17,6 +17,18 @@ https://github.com/user-attachments/assets/c0729bcf-811e-4100-844b-17ee652b7a41
 
 Requires Python 3.9+ and Google Chrome.
 
+**Quick start** — run scripts handle venv + deps automatically:
+
+```bash
+# macOS / Linux
+./run.sh [flags]
+
+# Windows (CMD or PowerShell)
+run.bat [flags]
+```
+
+Accepts the same flags as `diff.py`. Or set up manually:
+
 **macOS / Linux:**
 
 ```bash
@@ -123,6 +135,18 @@ https://github.com/user-attachments/assets/c0729bcf-811e-4100-844b-17ee652b7a41
 ## Kurulum
 
 Python 3.9+ ve Google Chrome gerekir.
+
+**Hızlı başlangıç** — run script'leri venv + bağımlılıkları otomatik kurar:
+
+```bash
+# macOS / Linux
+./run.sh [bayraklar]
+
+# Windows (CMD veya PowerShell)
+run.bat [bayraklar]
+```
+
+`diff.py` ile aynı bayrakları alır. Ya da manuel kurulum:
 
 **macOS / Linux:**
 
